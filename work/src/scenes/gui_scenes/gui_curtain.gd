@@ -1,4 +1,4 @@
-extends "res://addons/gui-manager/gui.gd"
+extends "res://addons/gui_manager/gui.gd"
 
 
 export(NodePath) var label_path

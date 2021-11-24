@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://addons/gui-manager/gui-manager.gd" type="Script" id=1]
+[ext_resource path="res://addons/gui_manager/gui_manager.gd" type="Script" id=1]
 
 [node name="GuiManager" type="Node"]
 script = ExtResource( 1 )

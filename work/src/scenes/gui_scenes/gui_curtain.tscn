@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://addons/gui-manager/gui.tscn" type="PackedScene" id=1]
+[ext_resource path="res://addons/gui_manager/gui.tscn" type="PackedScene" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
 [ext_resource path="res://work/src/scenes/gui_scenes/gui_curtain.gd" type="Script" id=3]
 
