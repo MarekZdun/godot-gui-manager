@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=5 format=2]
+
+[ext_resource path="res://addons/gs_window_manager/resources/window_manager_resource.gd" type="Script" id=1]
+[ext_resource path="res://resources/window_data/work_window_a.tres" type="Resource" id=2]
+[ext_resource path="res://resources/window_data/work_window_b.tres" type="Resource" id=3]
+[ext_resource path="res://resources/window_data/work_window_c.tres" type="Resource" id=4]
+
+[resource]
+script = ExtResource( 1 )
+use_default = true
+next_size_action = "next_size"
+prev_size_action = "prev_size"
+windows = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 2 ) ]

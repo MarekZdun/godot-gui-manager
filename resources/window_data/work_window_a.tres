@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://addons/gs_window_manager/resources/window_resource.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+id = ""
+name = ""
+width = 1440
+height = 900
+fullscreen = true
+default = false
+stretch_mode = 0
+stretch_aspect = 0

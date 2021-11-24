@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://work/src/scenes/gui_transition_scenes/move.gd" type="Script" id=1]
+[ext_resource path="res://addons/gui-manager/transition.tscn" type="PackedScene" id=2]
+
+[node name="Move" instance=ExtResource( 2 )]
+script = ExtResource( 1 )
