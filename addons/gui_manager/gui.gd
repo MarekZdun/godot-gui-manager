@@ -23,7 +23,7 @@ var utils = Utils.new()
 onready var root: Control = $Root
 
 
-func load_gui(gui_id: String, _z_order: int, transition_config: Dictionary):
+func load_gui(gui_id: String, _z_order: int, transition_config: Dictionary) -> void:
 	id = gui_id
 	z_order = _z_order
 	layer = z_order
@@ -45,7 +45,7 @@ func load_gui(gui_id: String, _z_order: int, transition_config: Dictionary):
 		emit_signal("gui_loaded", self)
 		
 		
-func unload_gui(transition_config: Dictionary):
+func unload_gui(transition_config: Dictionary) -> void:
 	if current_transition:
 		destroy_current_transition()
 	
@@ -62,7 +62,7 @@ func unload_gui(transition_config: Dictionary):
 		emit_signal("gui_unloaded", self)
 	
 	
-func destroy_current_transition():
+func destroy_current_transition() -> void:
 	current_transition.pre_destroy()
 	current_transition.queue_free()
 	current_transition = null

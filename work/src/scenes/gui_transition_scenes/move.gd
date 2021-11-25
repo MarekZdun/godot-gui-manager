@@ -13,7 +13,7 @@ func _ready():
 	add_child(tween)
 
 
-func _setup(transition_config: Dictionary):
+func _setup(transition_config: Dictionary) -> void:
 	gui_position_origin = transition_config.gui_position_origin
 	gui_position_end = transition_config.gui_position_end
 	
@@ -36,7 +36,7 @@ func remap_position_to_screen(position: Vector2) -> Vector2:
 	return Vector2(x, y)
 	
 	
-func _pre_destroy():
+func _pre_destroy() -> void:
 	tween.remove_all()
 	
 	
