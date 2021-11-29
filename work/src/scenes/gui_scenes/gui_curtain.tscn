@@ -12,10 +12,7 @@ button_path = NodePath("Root/ColorRect/Button")
 [node name="ColorRect" type="ColorRect" parent="Root" index="0"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.0235294, 0, 0.223529, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+color = Color( 0, 0, 0, 1 )
 
 [node name="Label" type="Label" parent="Root/ColorRect" index="0"]
 anchor_left = 0.5
