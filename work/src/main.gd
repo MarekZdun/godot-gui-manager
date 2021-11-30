@@ -2,6 +2,7 @@ extends Node
 
 
 export var window_manager: Resource
+var pause: bool = false
 
 
 func _ready():
@@ -12,7 +13,7 @@ func _ready():
 	
 	yield(get_tree().create_timer(1), "timeout")
 	
-	var fade = GuiManager.add_gui("gui_curtain", 127, {
+	var gui_0 = GuiManager.add_gui("gui_curtain", 127, {
 		"transition_name": "fade",
 		"transition_out": false,
 		"duration": 1,
@@ -20,9 +21,29 @@ func _ready():
 		"gui_opacity_end": 1.0
 	})
 	
-	yield(get_tree().create_timer(2), "timeout")
+	yield(GuiManager, "manager_gui_loaded")
 	
-	GuiManager.destroy_gui(fade, {
+	var gui_1 = GuiManager.add_gui_above_top_one("gui_progress", {
+		"transition_name": "fade",
+		"transition_out": false,
+		"duration": 1,
+		"gui_opacity_start": 0.0,
+		"gui_opacity_end": 1.0
+	})
+	
+	yield(GuiManager, "manager_gui_loaded")
+	
+	GuiManager.destroy_gui(gui_1, {
+		"transition_name": "fade",
+		"transition_out": true,
+		"duration": 1,
+		"gui_opacity_start": 1.0,
+		"gui_opacity_end": 0.0
+	})
+	
+	yield(GuiManager, "manager_gui_unloaded")
+	
+	GuiManager.destroy_gui(gui_0, {
 		"transition_name": "fade",
 		"transition_out": true,
 		"duration": 1,
@@ -85,6 +106,13 @@ func _ready():
 #		"gui_position_origin": Vector2(0, 0),
 #		"gui_position_end": Vector2(100, 0)
 #	})
+
+
+func _input(event):
+	if event.is_action_pressed("ui_cancel"):
+		pause = !pause
+		print(pause)
+		get_tree().paused = pause
 	
 
 

@@ -9,6 +9,6 @@ name = ""
 width = 1000
 height = 270
 fullscreen = false
-default = true
+default = false
 stretch_mode = 0
 stretch_aspect = 0
