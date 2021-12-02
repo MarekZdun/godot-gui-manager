@@ -18,11 +18,13 @@ func _ready():
 		"transition_out": false,
 		"duration": 1,
 		"gui_opacity_start": 0.0,
-		"gui_opacity_end": 1.0
+		"gui_opacity_end": 1.0,
+		"transition_type": Tween.TRANS_SINE,
+		"easy_type": Tween.EASE_OUT
 	})
-	
+
 	yield(GuiManager, "manager_gui_loaded")
-	
+
 	var gui_1 = GuiManager.add_gui_above_top_one("gui_progress", {
 		"transition_name": "fade",
 		"transition_out": false,
@@ -30,19 +32,21 @@ func _ready():
 		"gui_opacity_start": 0.0,
 		"gui_opacity_end": 1.0
 	})
-	
+
 	yield(GuiManager, "manager_gui_loaded")
-	
+
 	GuiManager.destroy_gui(gui_1, {
 		"transition_name": "fade",
 		"transition_out": true,
 		"duration": 1,
 		"gui_opacity_start": 1.0,
-		"gui_opacity_end": 0.0
+		"gui_opacity_end": 0.0,
+		"transition_type": Tween.TRANS_SINE,
+		"easy_type": Tween.EASE_IN
 	})
-	
+
 	yield(GuiManager, "manager_gui_unloaded")
-	
+
 	GuiManager.destroy_gui(gui_0, {
 		"transition_name": "fade",
 		"transition_out": true,
@@ -51,14 +55,18 @@ func _ready():
 		"gui_opacity_end": 0.0
 	})
 
+
+
 #	var move_1 = GuiManager.add_gui("gui_curtain", 127, {
 #		"transition_name": "move",
 #		"transition_out": false,
 #		"duration": 1,
 #		"gui_position_origin": Vector2(100, 0),
-#		"gui_position_end": Vector2(0, 0)
+#		"gui_position_end": Vector2(0, 0),
+#		"transition_type": Tween.TRANS_SINE,
+#		"easy_type": Tween.EASE_IN_OUT
 #	})
-	
+
 #	yield(get_tree().create_timer(2), "timeout")
 #
 #	var move_2 = GuiManager.add_gui("gui_curtain", 127, {

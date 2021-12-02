@@ -5,6 +5,8 @@ var mode: String = ProjectSettings.get_setting("display/window/stretch/mode")
 var aspect: String = ProjectSettings.get_setting("display/window/stretch/aspect")
 var gui_position_origin: Vector2
 var gui_position_end: Vector2
+var transition_type: int
+var easy_type: int
 var tween: Tween
 
 
@@ -16,6 +18,8 @@ func _ready():
 func _setup(transition_config: Dictionary) -> void:
 	gui_position_origin = transition_config.gui_position_origin
 	gui_position_end = transition_config.gui_position_end
+	transition_type = transition_config.transition_type if transition_config.has("transition_type") else Tween.TRANS_LINEAR 
+	easy_type = transition_config.easy_type if transition_config.has("easy_type") else Tween.EASE_IN_OUT
 	
 	root.rect_global_position = remap_position_to_screen(gui_position_origin)
 	root.show()
@@ -25,7 +29,8 @@ func _setup(transition_config: Dictionary) -> void:
 	var tween_callback = "_on_tween_out_ended" if transition_out else "_on_tween_in_ended"   
 	tween.connect("tween_completed", self, tween_callback)
 	
-	tween.interpolate_property(root, "rect_global_position", null, remap_position_to_screen(gui_position_end), duration)
+	tween.interpolate_property(root, "rect_global_position", null, remap_position_to_screen(gui_position_end), 
+			duration, transition_type, easy_type)
 	tween.start()
 
 

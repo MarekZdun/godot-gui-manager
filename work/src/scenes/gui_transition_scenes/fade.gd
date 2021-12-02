@@ -3,6 +3,8 @@ extends "res://addons/gui_manager/transition.gd"
 
 var gui_opacity_start: float
 var gui_opacity_end: float
+var transition_type: int
+var easy_type: int
 var tween: Tween
 
 
@@ -14,6 +16,8 @@ func _ready():
 func _setup(transition_config: Dictionary) -> void:
 	gui_opacity_start = transition_config.gui_opacity_start
 	gui_opacity_end = transition_config.gui_opacity_end
+	transition_type = transition_config.transition_type if transition_config.has("transition_type") else Tween.TRANS_LINEAR 
+	easy_type = transition_config.easy_type if transition_config.has("easy_type") else Tween.EASE_IN_OUT
 		
 	root.modulate.a = gui_opacity_start
 	root.show()
@@ -21,7 +25,7 @@ func _setup(transition_config: Dictionary) -> void:
 	var tween_callback = "_on_tween_out_ended" if transition_out else "_on_tween_in_ended"   
 	tween.connect("tween_completed", self, tween_callback)
 
-	tween.interpolate_property(root, "modulate:a", null, gui_opacity_end, duration)
+	tween.interpolate_property(root, "modulate:a", null, gui_opacity_end, duration, transition_type, easy_type)
 	tween.start()
 	
 	
