@@ -146,6 +146,14 @@ func find_gui_top() -> Control:
 				gui_top = gui
 		
 	return gui_top 
+	
+	
+func get_gui(gui_id: String) -> Control:
+	var gui = null
+	if gui_container.has(gui_id):
+		gui = gui_container[gui_id]
+
+	return gui
 
 
 func _on_gui_loaded(gui):
