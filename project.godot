@@ -48,6 +48,10 @@ window/size/height=270
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/gui_manager/plugin.cfg" )
+
 [input]
 
 next_size={
