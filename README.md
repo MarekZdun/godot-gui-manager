@@ -1,6 +1,7 @@
-# GUI Manager(Godot 3.5 version)
+# GUI Manager(Godot 4.1 version)
 
-A GUI Manager for [Godot Engine](https://godotengine.org/).
+A GUI Manager for [Godot Engine](https://godotengine.org/).<br />
+Looking for a Godot 3.5 version? [See godot 3.5 branch](https://github.com/MarekZdun/godot-gui-manager/tree/3.5).
 
 ## 📄 Features
 A manager that allows for smooth addition, removal, and modification of Control nodes.
