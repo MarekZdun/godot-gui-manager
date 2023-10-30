@@ -1,6 +1,6 @@
 extends Node
 """
-Manager whose purpose is to control root of its GUI
+A manager that allows for smooth addition, removal, and modification of Control nodes.
 (c) Pioneer Games
 v 1.2
 
@@ -17,7 +17,7 @@ Usage:
 
 -to add a GUI, call String GuiManager.add_gui(gui_name: String, gui_z_order: int, transition_data: Dictionary) method. Ex:
 	
-	var move_1 = GuiManager.add_gui("gui_curtain", 127, {
+	var gui_1 = GuiManager.add_gui("gui_curtain", 127, {
 		"transition_name": "move",
 		"transition_out": false,
 		"duration": 1,
