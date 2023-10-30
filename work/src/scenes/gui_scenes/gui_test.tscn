@@ -26,7 +26,8 @@ margin_left = -63.0
 margin_top = -7.0
 margin_right = 63.0
 margin_bottom = 7.0
-text = "CURTAIN WORKING"
+text = "IT WORKS"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -42,9 +43,6 @@ anchor_right = 1.0
 margin_left = -64.0
 margin_bottom = 64.0
 texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Button" type="Button" parent="Root/ColorRect" index="3"]
 anchor_left = 0.5

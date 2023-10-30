@@ -1,4 +1,4 @@
-extends "res://addons/gui_manager/transition.gd"
+extends ProxyGuiTransition
 
 
 var gui_opacity_start: float

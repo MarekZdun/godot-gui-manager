@@ -1,4 +1,4 @@
-extends "res://addons/gui_manager/transition.gd"
+extends ProxyGuiTransition
 
 
 var mode: String = ProjectSettings.get_setting("display/window/stretch/mode")

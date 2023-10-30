@@ -1,32 +1,30 @@
+class_name ProxyGui
 extends CanvasLayer
 """
-Gui base
+Proxy gui
 
 Usage:
 -right click on gui.tscn file in File System and choose New Inherited Scene
 
--right click on Gui node (top one) and choose Extend Script to add additional funcionality to your gui
+-right click on GUI node (top one) and choose Extend Script to add additional functionality to your GUI
 
--add your Control nodes to node Root 
+-add your Control nodes to the node named Root 
 """
-
 
 signal gui_loaded(gui)
 signal gui_unloaded(gui)
 
-
 var id: String
-var z_order: int
+var z_order: int setget set_z_order
 var current_transition: Control
-var utils = Utils.new()
+var utils := Utils.new()
 
 onready var root: Control = $Root
 
 
 func load_gui(gui_id: String, _z_order: int, transition_config: Dictionary) -> void:
 	id = gui_id
-	z_order = _z_order
-	layer = z_order
+	self.z_order = _z_order
 	root.hide()
 
 	if current_transition:
@@ -66,6 +64,11 @@ func destroy_current_transition() -> void:
 	current_transition.pre_destroy()
 	current_transition.queue_free()
 	current_transition = null
+	
+	
+func set_z_order(value: int) -> void:
+	z_order = value
+	layer = z_order
 		
 		
 func _on_transition_in_ended(gui):
@@ -81,10 +84,10 @@ func _on_transition_out_ended(gui):
 class Utils extends Resource:
 	const SCENETYPE = ['tscn.converted.scn', 'scn', 'tscn']
 	
-	func load_scene_instance(name: String, dir: String) -> Control:
-	    var file = File.new()
-	    var path = ''
-	    var scene = null
+	func load_scene_instance(name: String, dir: String) -> Node:
+	    var file := File.new()
+	    var path := ''
+	    var scene: Node = null
 
 	    for ext in SCENETYPE:
 	        path = '%s/%s.%s' % [dir, name, ext]

@@ -1,4 +1,4 @@
-extends "res://addons/gui_manager/gui.gd"
+extends ProxyGui
 
 
 export(NodePath) var label_path

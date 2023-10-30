@@ -1,6 +1,7 @@
+class_name ProxyGuiTransition
 extends Control
 """
-Transition base
+ProxyGuiTransition
 
 Usage:
 -right click on transition.tscn file in File System and choose New Inherited Scene
@@ -13,7 +14,6 @@ Usage:
 
 -don't forget about emitting signal transition_in_ended/transition_out_ended after transition is done 
 """
-
 
 signal transition_in_ended(gui)
 signal transition_out_ended(gui)

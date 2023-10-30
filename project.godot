@@ -9,6 +9,16 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "CanvasLayer",
+"class": "ProxyGui",
+"language": "GDScript",
+"path": "res://addons/gui_manager/gui.gd"
+}, {
+"base": "Control",
+"class": "ProxyGuiTransition",
+"language": "GDScript",
+"path": "res://addons/gui_manager/transition.gd"
+}, {
 "base": "Resource",
 "class": "ViewResource",
 "language": "GDScript",
@@ -25,6 +35,8 @@ _global_script_classes=[ {
 "path": "res://addons/gs_window_manager/resources/window_resource.gd"
 } ]
 _global_script_class_icons={
+"ProxyGui": "",
+"ProxyGuiTransition": "",
 "ViewResource": "",
 "WindowManagerResource": "",
 "WindowResource": ""

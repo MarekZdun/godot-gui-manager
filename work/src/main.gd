@@ -13,7 +13,7 @@ func _ready():
 	
 	yield(get_tree().create_timer(1), "timeout")
 	
-	var gui_0 = GuiManager.add_gui("gui_curtain", 127, {
+	var gui_0 := GuiManager.add_gui("gui_curtain", 127, {
 		"transition_name": "fade",
 		"transition_out": false,
 		"duration": 1,
@@ -25,7 +25,7 @@ func _ready():
 
 	yield(GuiManager, "manager_gui_loaded")
 
-	var gui_1 = GuiManager.add_gui_above_top_one("gui_progress", {
+	var gui_1 := GuiManager.add_gui_above_top_one("gui_progress", {
 		"transition_name": "fade",
 		"transition_out": false,
 		"duration": 1,
@@ -57,7 +57,7 @@ func _ready():
 
 
 
-#	var move_1 = GuiManager.add_gui("gui_curtain", 127, {
+#	var move_1 := GuiManager.add_gui("gui_curtain", 127, {
 #		"transition_name": "move",
 #		"transition_out": false,
 #		"duration": 1,
@@ -69,17 +69,7 @@ func _ready():
 
 #	yield(get_tree().create_timer(2), "timeout")
 #
-#	var move_2 = GuiManager.add_gui("gui_curtain", 127, {
-#		"transition_name": "move",
-#		"transition_out": false,
-#		"duration": 1,
-#		"gui_position_origin": Vector2(100, 0),
-#		"gui_position_end": Vector2(0, 0)
-#	})
-#
-#	yield(get_tree().create_timer(2), "timeout")
-#
-#	var move_3 = GuiManager.add_gui("gui_curtain", 127, {
+#	var move_2 := GuiManager.add_gui("gui_curtain", 127, {
 #		"transition_name": "move",
 #		"transition_out": false,
 #		"duration": 1,
@@ -90,8 +80,20 @@ func _ready():
 #	yield(get_tree().create_timer(2), "timeout")
 #
 #	GuiManager.destroy_all()
-	
-#	var move_2 = GuiManager.change_gui_top_one("gui_curtain", {
+
+
+
+#	var move_3 := GuiManager.add_gui("gui_test", 127, {
+#		"transition_name": "move",
+#		"transition_out": false,
+#		"duration": 1,
+#		"gui_position_origin": Vector2(100, 0),
+#		"gui_position_end": Vector2(0, 0)
+#	})
+#
+#	yield(get_tree().create_timer(2), "timeout")
+#
+#	var move_4 := GuiManager.change_gui_top_one("gui_curtain", {
 #		"transition_name": "move",
 #		"transition_out": false,
 #		"duration": 1,
@@ -104,10 +106,10 @@ func _ready():
 #		"gui_position_origin": Vector2(0, 0),
 #		"gui_position_end": Vector2(100, 0)
 #	})
-
+#
 #	yield(get_tree().create_timer(2), "timeout")
 #
-#	GuiManager.destroy_gui(move_1, {
+#	GuiManager.destroy_gui(move_4, {
 #		"transition_name": "move",
 #		"transition_out": true,
 #		"duration": 1,
