@@ -37,7 +37,7 @@ func load_gui(gui_id: String, _z_order: int, transition_config: Dictionary) -> v
 		current_transition = utils.load_scene_instance(transition_config.transition_name, transition_config.transition_scenes_dir)
 		
 		if current_transition:
-			current_transition.connect("transition_in_ended", self, "_on_transition_in_ended")
+			current_transition.connect("transition_in_ended", self, "_on_transition_in_ended", [], CONNECT_ONESHOT)
 			add_child(current_transition)
 			current_transition.setup(transition_config) 
 	else:
@@ -54,7 +54,7 @@ func unload_gui(transition_config: Dictionary) -> void:
 		current_transition = utils.load_scene_instance(transition_config.transition_name, transition_config.transition_scenes_dir)
 		
 		if current_transition:
-			current_transition.connect("transition_out_ended", self, "_on_transition_out_ended")
+			current_transition.connect("transition_out_ended", self, "_on_transition_out_ended", [], CONNECT_ONESHOT)
 			add_child(current_transition)
 			current_transition.setup(transition_config) 
 	else:

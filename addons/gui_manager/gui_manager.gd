@@ -2,7 +2,7 @@ extends Node
 """
 Manager whose purpose is to control root of its gui
 (c) Pioneer Games
-v 1.0
+v 1.1
 
 Usage:
 -choose gui scenes directory path in GuiManager Inspector
@@ -47,12 +47,12 @@ var gui_container: Dictionary = {}
 var utils = Utils.new()
 
 
-func add_gui(gui_name: String, z_order: int, transition_config: Dictionary) -> String:
+func add_gui(gui_name: String, z_order: int = 0, transition_config: Dictionary = {}) -> String:
 	var gui_id = ""
 	var gui = utils.load_scene_instance(gui_name, gui_scenes_dir)
 	if gui:
 		gui_id = utils.create_id()
-		gui.connect("gui_loaded", self, "_on_gui_loaded")
+		gui.connect("gui_loaded", self, "_on_gui_loaded", [], CONNECT_ONESHOT)
 		add_child(gui)
 		
 		transition_config.transition_scenes_dir = gui_transition_scenes_dir
@@ -63,7 +63,7 @@ func add_gui(gui_name: String, z_order: int, transition_config: Dictionary) -> S
 	return gui_id
 	
 	
-func add_gui_above_top_one(gui_name: String, transition_config: Dictionary) -> String:
+func add_gui_above_top_one(gui_name: String, transition_config: Dictionary = {}) -> String:
 	var gui_id = ""
 	var gui_top_z_order = 0
 	var gui_top = find_gui_top()
@@ -74,7 +74,7 @@ func add_gui_above_top_one(gui_name: String, transition_config: Dictionary) -> S
 	var gui = utils.load_scene_instance(gui_name, gui_scenes_dir)
 	if gui:
 		gui_id = utils.create_id()
-		gui.connect("gui_loaded", self, "_on_gui_loaded")
+		gui.connect("gui_loaded", self, "_on_gui_loaded", [], CONNECT_ONESHOT)
 		add_child(gui)
 		
 		transition_config.transition_scenes_dir = gui_transition_scenes_dir
@@ -85,7 +85,7 @@ func add_gui_above_top_one(gui_name: String, transition_config: Dictionary) -> S
 	return gui_id
 	
 	
-func add_gui_under_top_one(gui_name: String, transition_config: Dictionary) -> String:
+func add_gui_under_top_one(gui_name: String, transition_config: Dictionary = {}) -> String:
 	var gui_id = ""
 	var gui_top_z_order = 0
 	var gui_top = find_gui_top()
@@ -96,7 +96,7 @@ func add_gui_under_top_one(gui_name: String, transition_config: Dictionary) -> S
 	var gui = utils.load_scene_instance(gui_name, gui_scenes_dir)
 	if gui:
 		gui_id = utils.create_id()
-		gui.connect("gui_loaded", self, "_on_gui_loaded")
+		gui.connect("gui_loaded", self, "_on_gui_loaded", [], CONNECT_ONESHOT)
 		add_child(gui)
 		
 		transition_config.transition_scenes_dir = gui_transition_scenes_dir
@@ -107,7 +107,7 @@ func add_gui_under_top_one(gui_name: String, transition_config: Dictionary) -> S
 	return gui_id
 	
 	
-func change_gui_top_one(gui_name: String, transition_config: Dictionary, gui_top_transition_config: Dictionary) -> String:
+func change_gui_top_one(gui_name: String, transition_config: Dictionary = {}, gui_top_transition_config: Dictionary = {}) -> String:
 	var gui_top_z_order = 0
 	var gui_top = find_gui_top()
 	
@@ -118,10 +118,10 @@ func change_gui_top_one(gui_name: String, transition_config: Dictionary, gui_top
 	return add_gui(gui_name, gui_top_z_order, transition_config)
 		
 		
-func destroy_gui(gui_id: String, transition_config: Dictionary) -> void:
-	var gui = gui_container[gui_id]
-	if gui:
-		gui.connect("gui_unloaded", self, "_on_gui_unloaded")
+func destroy_gui(gui_id: String, transition_config: Dictionary = {}) -> void:
+	var gui = gui_container.get(gui_id)
+	if is_instance_valid(gui):
+		gui.connect("gui_unloaded", self, "_on_gui_unloaded", [], CONNECT_ONESHOT)
 		
 		transition_config.transition_scenes_dir = gui_transition_scenes_dir
 		gui.unload_gui(transition_config)
@@ -132,7 +132,7 @@ func destroy_all() -> void:
 		var gui_array = gui_container.values()
 		
 		for gui in gui_array:
-			destroy_gui(gui.id, {})
+			destroy_gui(gui.id)
 
 
 func find_gui_top() -> Control:

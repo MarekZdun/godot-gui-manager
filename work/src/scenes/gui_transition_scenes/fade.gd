@@ -23,7 +23,7 @@ func _setup(transition_config: Dictionary) -> void:
 	root.show()
 
 	var tween_callback = "_on_tween_out_ended" if transition_out else "_on_tween_in_ended"   
-	tween.connect("tween_completed", self, tween_callback)
+	tween.connect("tween_completed", self, tween_callback, [], CONNECT_ONESHOT)
 
 	tween.interpolate_property(root, "modulate:a", null, gui_opacity_end, duration, transition_type, easy_type)
 	tween.start()
