@@ -35,11 +35,11 @@ func _start():
 
 func _change_window(view : WindowResource):
 	if (view.fullscreen):
-		OS.window_fullscreen = true
+		get_window().mode = Window.MODE_EXCLUSIVE_FULLSCREEN if (true) else Window.MODE_WINDOWED
 	else:
-		OS.window_fullscreen = false
+		get_window().mode = Window.MODE_EXCLUSIVE_FULLSCREEN if (false) else Window.MODE_WINDOWED
 
-	OS.window_size = Vector2(view.width, view.height)
+	get_window().size = Vector2(view.width, view.height)
 
 	emit_signal("window_changed", view)
 

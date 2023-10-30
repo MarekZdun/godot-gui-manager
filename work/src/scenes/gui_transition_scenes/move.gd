@@ -21,23 +21,23 @@ func _setup(transition_config: Dictionary) -> void:
 	transition_type = transition_config.transition_type if transition_config.has("transition_type") else Tween.TRANS_LINEAR 
 	easy_type = transition_config.easy_type if transition_config.has("easy_type") else Tween.EASE_IN_OUT
 	
-	root.rect_global_position = remap_position_to_screen(gui_position_origin)
+	root.global_position = remap_position_to_screen(gui_position_origin)
 	root.show()
 	
-	self.connect("resized", self, "_on_resized")
+	self.connect("resized", Callable(self, "_on_resized"))
 	
 	var tween_callback = "_on_tween_out_ended" if transition_out else "_on_tween_in_ended"   
-	tween.connect("tween_completed", self, tween_callback, [], CONNECT_ONESHOT)
+	tween.connect("tween_completed", Callable(self, tween_callback).bind(), CONNECT_ONE_SHOT)
 	
-	tween.interpolate_property(root, "rect_global_position", null, remap_position_to_screen(gui_position_end), 
+	tween.interpolate_property(root, "global_position", null, remap_position_to_screen(gui_position_end), 
 			duration, transition_type, easy_type)
 	tween.start()
 
 
 func remap_position_to_screen(position: Vector2) -> Vector2:
 	var gui_size_origin = root.get_global_rect().size
-	var x = range_lerp(position.x, 0, 100, 0, gui_size_origin.x) 
-	var y = range_lerp(position.y, 0, 100, 0, gui_size_origin.y)
+	var x = remap(position.x, 0, 100, 0, gui_size_origin.x) 
+	var y = remap(position.y, 0, 100, 0, gui_size_origin.y)
 	return Vector2(x, y)
 	
 	
@@ -51,8 +51,8 @@ func _on_resized():
 			((mode == "2d" or mode == "viewport") and 
 			(aspect == "keep_width" or aspect == "keep_height" or aspect == "expand")) 
 	):
-		tween.remove(root, "rect_global_position")
-		tween.interpolate_property(root, "rect_global_position", remap_position_to_screen(gui_position_origin), remap_position_to_screen(gui_position_end), duration)
+		tween.remove(root, "global_position")
+		tween.interpolate_property(root, "global_position", remap_position_to_screen(gui_position_origin), remap_position_to_screen(gui_position_end), duration)
 
 
 func _on_tween_in_ended(object: Object, key: NodePath):

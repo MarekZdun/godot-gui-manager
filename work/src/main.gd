@@ -1,17 +1,17 @@
 extends Node
 
 
-export var window_manager: Resource
+@export var window_manager: Resource
 var pause: bool = false
 
 
 func _ready():
 	WindowManager.load(window_manager)
 
-	GuiManager.connect("manager_gui_loaded", self, "_on_gui_on_screen")
-	GuiManager.connect("manager_gui_unloaded", self, "_on_gui_off_screen")
+	GuiManager.connect("manager_gui_loaded", Callable(self, "_on_gui_on_screen"))
+	GuiManager.connect("manager_gui_unloaded", Callable(self, "_on_gui_off_screen"))
 	
-	yield(get_tree().create_timer(1), "timeout")
+	await get_tree().create_timer(1).timeout
 	
 	var gui_0 := GuiManager.add_gui("gui_curtain", 127, {
 		"transition_name": "fade",
@@ -23,7 +23,7 @@ func _ready():
 		"easy_type": Tween.EASE_OUT
 	})
 
-	yield(GuiManager, "manager_gui_loaded")
+	await GuiManager.manager_gui_loaded
 
 	var gui_1 := GuiManager.add_gui_above_top_one("gui_progress", {
 		"transition_name": "fade",
@@ -33,7 +33,7 @@ func _ready():
 		"gui_opacity_end": 1.0
 	})
 
-	yield(GuiManager, "manager_gui_loaded")
+	await GuiManager.manager_gui_loaded
 
 	GuiManager.destroy_gui(gui_1, {
 		"transition_name": "fade",
@@ -45,7 +45,7 @@ func _ready():
 		"easy_type": Tween.EASE_IN
 	})
 
-	yield(GuiManager, "manager_gui_unloaded")
+	await GuiManager.manager_gui_unloaded
 
 	GuiManager.destroy_gui(gui_0, {
 		"transition_name": "fade",

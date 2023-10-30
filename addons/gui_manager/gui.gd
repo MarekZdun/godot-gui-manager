@@ -15,11 +15,11 @@ signal gui_loaded(gui)
 signal gui_unloaded(gui)
 
 var id: String
-var z_order: int setget set_z_order
+var z_order: int: set = set_z_order
 var current_transition: Control
 var utils := Utils.new()
 
-onready var root: Control = $Root
+@onready var root: Control = $Root
 
 
 func load_gui(gui_id: String, _z_order: int, transition_config: Dictionary) -> void:
@@ -30,12 +30,12 @@ func load_gui(gui_id: String, _z_order: int, transition_config: Dictionary) -> v
 	if current_transition:
 		destroy_current_transition()
 
-	if transition_config.has("transition_name") and not transition_config.transition_name.empty():
+	if transition_config.has("transition_name") and not transition_config.transition_name.is_empty():
 		transition_config.root = root
 		current_transition = utils.load_scene_instance(transition_config.transition_name, transition_config.transition_scenes_dir)
 		
 		if current_transition:
-			current_transition.connect("transition_in_ended", self, "_on_transition_in_ended", [], CONNECT_ONESHOT)
+			current_transition.connect("transition_in_ended", Callable(self, "_on_transition_in_ended").bind(), CONNECT_ONE_SHOT)
 			add_child(current_transition)
 			current_transition.setup(transition_config) 
 	else:
@@ -47,12 +47,12 @@ func unload_gui(transition_config: Dictionary) -> void:
 	if current_transition:
 		destroy_current_transition()
 	
-	if transition_config.has("transition_name") and not transition_config.transition_name.empty():
+	if transition_config.has("transition_name") and not transition_config.transition_name.is_empty():
 		transition_config.root = root
 		current_transition = utils.load_scene_instance(transition_config.transition_name, transition_config.transition_scenes_dir)
 		
 		if current_transition:
-			current_transition.connect("transition_out_ended", self, "_on_transition_out_ended", [], CONNECT_ONESHOT)
+			current_transition.connect("transition_out_ended", Callable(self, "_on_transition_out_ended").bind(), CONNECT_ONE_SHOT)
 			add_child(current_transition)
 			current_transition.setup(transition_config) 
 	else:
@@ -93,7 +93,7 @@ class Utils extends Resource:
 	        path = '%s/%s.%s' % [dir, name, ext]
 
 	        if file.file_exists(path):
-	            scene = load(path).instance()
+	            scene = load(path).instantiate()
 	            break
 
 	    return scene

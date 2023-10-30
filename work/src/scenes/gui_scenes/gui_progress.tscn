@@ -11,11 +11,11 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -120.0
-margin_top = -34.0
-margin_right = -20.0
-margin_bottom = -20.0
-rect_min_size = Vector2( 100, 14 )
+offset_left = -120.0
+offset_top = -34.0
+offset_right = -20.0
+offset_bottom = -20.0
+custom_minimum_size = Vector2( 100, 14 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
