@@ -13,9 +13,9 @@ A manager that allows for smooth addition, removal, and modification of Control 
 	
 ➡️ depending on the transition type (transition in or transition out) connect the corresponding signal. Ex:
 	
-	GuiManager.connect("manager_gui_loaded", self, "_on_gui_on_screen") 
+	GuiManager.manager_gui_loaded.connect(_on_gui_on_screen)
 	or
-	GuiManager.connect("manager_gui_unloaded", self, "_on_gui_off_screen")
+	GuiManager.manager_gui_unloaded.connect(_on_gui_off_screen)
 	
 ➡️ to add a GUI, call the String GuiManager.add_gui(gui_name: String, gui_z_order: int, transition_data: Dictionary) method. Ex:
 	
