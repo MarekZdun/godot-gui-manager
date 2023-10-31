@@ -23,7 +23,7 @@ func _ready():
 		"easy_type": Tween.EASE_OUT
 	})
 
-	await GuiManager.manager_gui_loaded
+	await GuiManager.get_gui(gui_0).gui_loaded
 
 	var gui_1 := GuiManager.add_gui_above_top_one("gui_progress", {
 		"transition_name": "fade",
@@ -33,7 +33,7 @@ func _ready():
 		"gui_opacity_end": 1.0
 	})
 
-	await GuiManager.manager_gui_loaded
+	await GuiManager.get_gui(gui_1).gui_loaded
 
 	GuiManager.destroy_gui(gui_1, {
 		"transition_name": "fade",
@@ -45,7 +45,7 @@ func _ready():
 		"easy_type": Tween.EASE_IN
 	})
 
-	await GuiManager.manager_gui_unloaded
+	await GuiManager.get_gui(gui_1).gui_unloaded
 
 	GuiManager.destroy_gui(gui_0, {
 		"transition_name": "fade",
