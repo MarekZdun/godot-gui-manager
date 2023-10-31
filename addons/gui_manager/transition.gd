@@ -8,7 +8,7 @@ Usage:
 
 -right click on Transition node (top one) and choose Extend Script to add additional funcionality to your transition
 
--add AnimatioPlayer/Tween as child of Transition node
+-add AnimatioPlayer/Tween as child of Transition node if you want to use smooth transitions
 
 -override _setup(transition_config: Dictionary) and _pre_destroy() virtual functions
 

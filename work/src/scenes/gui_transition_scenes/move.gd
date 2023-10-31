@@ -10,11 +10,6 @@ var easy_type: int
 var tween: Tween
 
 
-func _ready():
-	tween = Tween.new()
-	add_child(tween)
-
-
 func _setup(transition_config: Dictionary) -> void:
 	gui_position_origin = transition_config.gui_position_origin
 	gui_position_end = transition_config.gui_position_end
@@ -24,25 +19,24 @@ func _setup(transition_config: Dictionary) -> void:
 	root.global_position = remap_position_to_screen(gui_position_origin)
 	root.show()
 	
-	self.connect("resized", Callable(self, "_on_resized"))
+	resized.connect(_on_resized)
 	
-	var tween_callback = "_on_tween_out_ended" if transition_out else "_on_tween_in_ended"   
-	tween.connect("tween_completed", Callable(self, tween_callback).bind(), CONNECT_ONE_SHOT)
-	
-	tween.interpolate_property(root, "global_position", null, remap_position_to_screen(gui_position_end), 
-			duration, transition_type, easy_type)
-	tween.start()
+	tween = create_tween()
+	var tween_callback := "_on_tween_out_ended" if transition_out else "_on_tween_in_ended"   
+	tween.finished.connect(Callable(self, tween_callback).bind(root), CONNECT_ONE_SHOT)
+	tween.tween_property(root, "global_position", remap_position_to_screen(gui_position_end), duration).set_trans(transition_type).set_ease(easy_type)
 
 
 func remap_position_to_screen(position: Vector2) -> Vector2:
-	var gui_size_origin = root.get_global_rect().size
-	var x = remap(position.x, 0, 100, 0, gui_size_origin.x) 
-	var y = remap(position.y, 0, 100, 0, gui_size_origin.y)
+	var gui_size_origin := root.get_global_rect().size
+	var x := remap(position.x, 0, 100, 0, gui_size_origin.x) 
+	var y := remap(position.y, 0, 100, 0, gui_size_origin.y)
 	return Vector2(x, y)
 	
 	
 func _pre_destroy() -> void:
-	tween.remove_all()
+	if tween.is_valid():
+		tween.kill()
 	
 	
 func _on_resized():
@@ -51,15 +45,18 @@ func _on_resized():
 			((mode == "2d" or mode == "viewport") and 
 			(aspect == "keep_width" or aspect == "keep_height" or aspect == "expand")) 
 	):
-		tween.remove(root, "global_position")
-		tween.interpolate_property(root, "global_position", remap_position_to_screen(gui_position_origin), remap_position_to_screen(gui_position_end), duration)
+		if tween.is_valid():
+			tween.kill()
+			var gui_position_origin_remaped := remap_position_to_screen(gui_position_origin)
+			var gui_position_end_remaped := remap_position_to_screen(gui_position_end)
+			tween.tween_property(root, "global_position", gui_position_end_remaped, duration).from(gui_position_origin_remaped).set_trans(transition_type).set_ease(easy_type)
 
 
-func _on_tween_in_ended(object: Object, key: NodePath):
-	emit_signal("transition_in_ended", object.get_parent())
+func _on_tween_in_ended(object: Object):
+	transition_in_ended.emit(object)
 	
 	
-func _on_tween_out_ended(object: Object, key: NodePath):
-	emit_signal("transition_out_ended", object.get_parent())
+func _on_tween_out_ended(object: Object):
+	transition_out_ended.emit(object)
 
 

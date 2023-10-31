@@ -6,11 +6,6 @@ var gui_opacity_end: float
 var transition_type: int
 var easy_type: int
 var tween: Tween
-
-
-func _ready():
-	tween = Tween.new()
-	add_child(tween)
 	
 	
 func _setup(transition_config: Dictionary) -> void:
@@ -22,20 +17,20 @@ func _setup(transition_config: Dictionary) -> void:
 	root.modulate.a = gui_opacity_start
 	root.show()
 
-	var tween_callback = "_on_tween_out_ended" if transition_out else "_on_tween_in_ended"   
-	tween.connect("tween_completed", Callable(self, tween_callback).bind(), CONNECT_ONE_SHOT)
-
-	tween.interpolate_property(root, "modulate:a", null, gui_opacity_end, duration, transition_type, easy_type)
-	tween.start()
+	tween = create_tween()
+	var tween_callback := "_on_tween_out_ended" if transition_out else "_on_tween_in_ended"
+	tween.finished.connect(Callable(self, tween_callback).bind(root), CONNECT_ONE_SHOT)
+	tween.tween_property(root, "modulate:a", gui_opacity_end, duration).set_trans(transition_type).set_ease(easy_type)
 	
 	
 func _pre_destroy() -> void:
-	tween.remove_all()
+	if tween.is_valid():
+		tween.kill()
 	
 	
-func _on_tween_in_ended(object: Object, key: NodePath):
-	emit_signal("transition_in_ended", object.get_parent())
+func _on_tween_in_ended(object: Object):
+	transition_in_ended.emit(object)
 	
 	
-func _on_tween_out_ended(object: Object, key: NodePath):
-	emit_signal("transition_out_ended", object.get_parent())
+func _on_tween_out_ended(object: Object):
+	transition_out_ended.emit(object)

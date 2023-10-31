@@ -6,7 +6,7 @@ signal window_changed(view)
 var manager_data : WindowManagerResource
 var window_index : int
 
-const version = "3.2-R1-dev"
+const VERSION = "4.x"
 
 
 func load(data : WindowManagerResource):
@@ -23,6 +23,9 @@ func _process(delta):
 		_next_window()
 
 func _start():
+	
+#	Logger.trace("[WindowManager] _start")
+
 	window_index = -1
 
 	if (manager_data.use_default):
@@ -34,29 +37,42 @@ func _start():
 				return
 
 func _change_window(view : WindowResource):
-	if (view.fullscreen):
-		get_window().mode = Window.MODE_EXCLUSIVE_FULLSCREEN if (true) else Window.MODE_WINDOWED
-	else:
-		get_window().mode = Window.MODE_EXCLUSIVE_FULLSCREEN if (false) else Window.MODE_WINDOWED
+	
+#	Logger.trace("[WindowManager] _change_window")
 
-	get_window().size = Vector2(view.width, view.height)
+	if (view.fullscreen):
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+
+	DisplayServer.window_set_size(Vector2(view.width, view.height))
 
 	emit_signal("window_changed", view)
 
 
 func _next_window():
+
+#	Logger.trace("[WindowManager] _next_window")
+
 	window_index += 1
+
+#	Logger.debug("- window index is : {0}".format([window_index]))
+
 	if (window_index > manager_data.windows.size() - 1):
 		window_index = 0
 
 	_change_window(manager_data.windows[window_index])
 
 
-func _ready():
+func _init():
 	
-	print(" ")
+	print()
 	print("godot-stuff WindowManager")
 	print("https://gitlab.com/godot-stuff/gs-window-manager")
-	print("Copyright 2018-2020, SpockerDotNet LLC")
-	print("Version " + version)
-	print(" ")
+	print("Copyright 2018-2023, SpockerDotNet LLC. All rights reserved.")
+	print("Version " + VERSION)
+	print()
+
+func _ready():
+	
+	pass

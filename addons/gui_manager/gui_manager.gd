@@ -11,9 +11,9 @@ Usage:
 
 -depending on the transition type (transition in or transition out) connect the corresponding signal. Ex:
 	
-	GuiManager.connect("manager_gui_loaded", Callable(self, "_on_gui_on_screen")) 
+	GuiManager.manager_gui_loaded.connect(_on_gui_on_screen)
 	or
-	GuiManager.connect("manager_gui_unloaded", Callable(self, "_on_gui_off_screen"))
+	GuiManager.manager_gui_unloaded.connect(_on_gui_off_screen)
 
 -to add a GUI, call String GuiManager.add_gui(gui_name: String, gui_z_order: int, transition_data: Dictionary) method. Ex:
 	
@@ -39,8 +39,8 @@ Usage:
 signal manager_gui_loaded(gui)
 signal manager_gui_unloaded(gui)
 
-@export var gui_scenes_dir: String = "res://src/scenes/gui_scenes" # (String, DIR)
-@export var gui_transition_scenes_dir: String = "res://src/scenes/gui_transition_scenes" # (String, DIR)
+@export_dir var gui_scenes_dir: String = "res://src/scenes/gui_scenes"
+@export_dir var gui_transition_scenes_dir: String = "res://src/scenes/gui_transition_scenes"
 
 var gui_container: Dictionary = {}
 var utils: Utils = Utils.new()
@@ -51,7 +51,7 @@ func add_gui(gui_name: String, z_order: int = 0, transition_config: Dictionary =
 	var gui: Node = utils.load_scene_instance(gui_name, gui_scenes_dir)
 	if gui:
 		gui_id = utils.create_id()
-		gui.connect("gui_loaded", Callable(self, "_on_gui_loaded").bind(), CONNECT_ONE_SHOT)
+		gui.gui_loaded.connect(_on_gui_loaded, CONNECT_ONE_SHOT)
 		add_child(gui)
 		
 		transition_config.transition_scenes_dir = gui_transition_scenes_dir
@@ -73,7 +73,7 @@ func add_gui_above_top_one(gui_name: String, transition_config: Dictionary = {})
 	var gui := utils.load_scene_instance(gui_name, gui_scenes_dir)
 	if gui:
 		gui_id = utils.create_id()
-		gui.connect("gui_loaded", Callable(self, "_on_gui_loaded").bind(), CONNECT_ONE_SHOT)
+		gui.gui_loaded.connect(_on_gui_loaded, CONNECT_ONE_SHOT)
 		add_child(gui)
 		
 		transition_config.transition_scenes_dir = gui_transition_scenes_dir
@@ -95,7 +95,7 @@ func add_gui_under_top_one(gui_name: String, transition_config: Dictionary = {})
 	var gui := utils.load_scene_instance(gui_name, gui_scenes_dir)
 	if gui:
 		gui_id = utils.create_id()
-		gui.connect("gui_loaded", Callable(self, "_on_gui_loaded").bind(), CONNECT_ONE_SHOT)
+		gui.gui_loaded.connect(_on_gui_loaded, CONNECT_ONE_SHOT)
 		add_child(gui)
 		
 		transition_config.transition_scenes_dir = gui_transition_scenes_dir
@@ -120,7 +120,7 @@ func change_gui_top_one(gui_name: String, transition_config: Dictionary = {}, gu
 func destroy_gui(gui_id: String, transition_config: Dictionary = {}) -> void:
 	var gui := gui_container.get(gui_id) as CanvasLayer
 	if is_instance_valid(gui):
-		gui.connect("gui_unloaded", Callable(self, "_on_gui_unloaded").bind(), CONNECT_ONE_SHOT)
+		gui.gui_unloaded.connect(_on_gui_unloaded, CONNECT_ONE_SHOT)
 		
 		transition_config.transition_scenes_dir = gui_transition_scenes_dir
 		gui.unload_gui(transition_config)
@@ -156,14 +156,14 @@ func get_gui(gui_id: String) -> CanvasLayer:
 
 
 func _on_gui_loaded(gui):
-	emit_signal("manager_gui_loaded", gui)
+	manager_gui_loaded.emit(gui)
 	
 	
 func _on_gui_unloaded(gui):
 	var gui_id := gui.id as String
 	gui.queue_free()
 	gui_container.erase(gui_id)
-	emit_signal("manager_gui_unloaded", gui_id)
+	manager_gui_unloaded.emit(gui_id)
 
 
 class Utils extends Resource:
@@ -172,18 +172,17 @@ class Utils extends Resource:
 	var auto_id: int = 0
 	
 	func load_scene_instance(name: String, dir: String) -> Node:
-	    var file := File.new()
-	    var path := ''
-	    var scene: Node = null
+		var path := ''
+		var scene: Node = null
 
-	    for ext in SCENETYPE:
-	        path = '%s/%s.%s' % [dir, name, ext]
+		for ext in SCENETYPE:
+			path = '%s/%s.%s' % [dir, name, ext]
 
-	        if file.file_exists(path):
-	            scene = load(path).instantiate()
-	            break
+			if FileAccess.file_exists(path):
+				scene = load(path).instantiate()
+				break
 
-	    return scene
+		return scene
 		
 	
 	func create_id() -> String:

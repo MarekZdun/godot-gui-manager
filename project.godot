@@ -29,7 +29,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gui_manager/plugin.cfg")
+enabled=PackedStringArray("res://addons/gs_window_manager/plugin.cfg", "res://addons/gui_manager/plugin.cfg")
 
 [input]
 

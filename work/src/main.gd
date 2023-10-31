@@ -8,8 +8,8 @@ var pause: bool = false
 func _ready():
 	WindowManager.load(window_manager)
 
-	GuiManager.connect("manager_gui_loaded", Callable(self, "_on_gui_on_screen"))
-	GuiManager.connect("manager_gui_unloaded", Callable(self, "_on_gui_off_screen"))
+	GuiManager.manager_gui_loaded.connect(_on_gui_on_screen)
+	GuiManager.manager_gui_unloaded.connect(_on_gui_off_screen)
 	
 	await get_tree().create_timer(1).timeout
 	
@@ -67,7 +67,7 @@ func _ready():
 #		"easy_type": Tween.EASE_IN_OUT
 #	})
 
-#	yield(get_tree().create_timer(2), "timeout")
+#	await get_tree().create_timer(2).timeout
 #
 #	var move_2 := GuiManager.add_gui("gui_curtain", 127, {
 #		"transition_name": "move",
@@ -77,7 +77,7 @@ func _ready():
 #		"gui_position_end": Vector2(0, 0)
 #	})
 #
-#	yield(get_tree().create_timer(2), "timeout")
+#	await get_tree().create_timer(2).timeout
 #
 #	GuiManager.destroy_all()
 
@@ -91,7 +91,7 @@ func _ready():
 #		"gui_position_end": Vector2(0, 0)
 #	})
 #
-#	yield(get_tree().create_timer(2), "timeout")
+#	await get_tree().create_timer(2).timeout
 #
 #	var move_4 := GuiManager.change_gui_top_one("gui_curtain", {
 #		"transition_name": "move",
@@ -107,7 +107,7 @@ func _ready():
 #		"gui_position_end": Vector2(100, 0)
 #	})
 #
-#	yield(get_tree().create_timer(2), "timeout")
+#	await get_tree().create_timer(2).timeout
 #
 #	GuiManager.destroy_gui(move_4, {
 #		"transition_name": "move",
@@ -124,8 +124,6 @@ func _input(event):
 		print(pause)
 		get_tree().paused = pause
 	
-
-
 
 func _on_gui_on_screen(gui):
 	print("loaded " + gui.id + " " + gui.name)

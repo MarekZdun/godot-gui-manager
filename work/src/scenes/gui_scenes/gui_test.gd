@@ -2,19 +2,19 @@ extends ProxyGui
 
 
 @export var label_path: NodePath
-var label: Label
-
 @export var button_path: NodePath
+
+var label: Label
 var button: Button
 
 
 func _ready():
 	button = get_node(button_path)
-	button.connect("pressed", Callable(self, "_on_Button_pressed"))
+	button.pressed.connect(_on_Button_pressed)
 	
 	label = get_node(label_path)
 	label.text = self.name
-	label.align = 1
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	
 	
 func _on_Button_pressed():
