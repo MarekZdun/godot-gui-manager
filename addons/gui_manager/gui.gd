@@ -20,7 +20,6 @@ var z_order: int:
 		z_order = value
 		layer = z_order
 var current_transition: Control
-var utils: Utils = Utils.new()
 
 @onready var root: Control = $Root
 
@@ -35,7 +34,7 @@ func load_gui(gui_id: String, _z_order: int, transition_config: Dictionary) -> v
 
 	if transition_config.has("transition_name") and not transition_config.transition_name.is_empty():
 		transition_config.root = root
-		current_transition = utils.load_scene_instance(transition_config.transition_name, transition_config.transition_scenes_dir)
+		current_transition = GuiManager.utils.load_scene_instance(transition_config.transition_name, transition_config.transition_scenes_dir)
 		
 		if current_transition:
 			current_transition.transition_in_ended.connect(_on_transition_in_ended, CONNECT_ONE_SHOT)
@@ -52,7 +51,7 @@ func unload_gui(transition_config: Dictionary) -> void:
 	
 	if transition_config.has("transition_name") and not transition_config.transition_name.is_empty():
 		transition_config.root = root
-		current_transition = utils.load_scene_instance(transition_config.transition_name, transition_config.transition_scenes_dir)
+		current_transition = GuiManager.utils.load_scene_instance(transition_config.transition_name, transition_config.transition_scenes_dir)
 		
 		if current_transition:
 			current_transition.transition_out_ended.connect(_on_transition_out_ended, CONNECT_ONE_SHOT)
@@ -77,20 +76,3 @@ func _on_transition_in_ended(gui):
 func _on_transition_out_ended(gui):
 	destroy_current_transition()
 	gui_unloaded.emit(self)
-
-
-class Utils extends Resource:
-	const SCENETYPE = ['tscn.converted.scn', 'scn', 'tscn']
-	
-	func load_scene_instance(name: String, dir: String) -> Node:
-		var path := ''
-		var scene: Node = null
-
-		for ext in SCENETYPE:
-			path = '%s/%s.%s' % [dir, name, ext]
-
-			if FileAccess.file_exists(path):
-				scene = load(path).instantiate()
-				break
-
-		return scene
