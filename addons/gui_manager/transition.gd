@@ -1,4 +1,4 @@
-class_name ProxyGuiTransition
+@abstract class_name ProxyGuiTransition
 extends Control
 """
 ProxyGuiTransition
@@ -36,9 +36,6 @@ func pre_destroy() -> void:
 	_pre_destroy()
 
 
-func _setup(transition_config: Dictionary) -> void:
-	assert(false, "Override activate in subtypes")
+@abstract func _setup(transition_config: Dictionary) -> void
 	
-	
-func _pre_destroy() -> void:
-	assert(false, "Override activate in subtypes")
+@abstract func _pre_destroy() -> void

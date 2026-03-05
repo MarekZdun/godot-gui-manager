@@ -1,9 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://b7snnqvhr5c2"]
+[gd_scene format=3 uid="uid://b7snnqvhr5c2"]
 
-[ext_resource type="Script" path="res://work/src/scenes/gui_transition_scenes/fade.gd" id="1"]
-[ext_resource type="PackedScene" uid="uid://dr1r38m8rmcy5" path="res://addons/gui_manager/transition.tscn" id="2"]
+[ext_resource type="Script" uid="uid://d13ub6j6i7aln" path="res://work/src/scenes/gui_transition_scenes/fade.gd" id="1"]
 
-[node name="Fade" instance=ExtResource("2")]
+[node name="Fade" type="Control" unique_id=26772980]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")

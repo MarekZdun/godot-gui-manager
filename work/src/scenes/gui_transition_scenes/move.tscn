@@ -1,9 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://bu118o3orjrb1"]
+[gd_scene format=3 uid="uid://bu118o3orjrb1"]
 
-[ext_resource type="Script" path="res://work/src/scenes/gui_transition_scenes/move.gd" id="1"]
-[ext_resource type="PackedScene" uid="uid://dr1r38m8rmcy5" path="res://addons/gui_manager/transition.tscn" id="2"]
+[ext_resource type="Script" uid="uid://55dn5on68q3k" path="res://work/src/scenes/gui_transition_scenes/move.gd" id="1"]
 
-[node name="Move" instance=ExtResource("2")]
+[node name="Move" type="Control" unique_id=1534488961]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
