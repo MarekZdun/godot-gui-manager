@@ -58,5 +58,3 @@ func _on_tween_in_ended(object: Object):
 	
 func _on_tween_out_ended(object: Object):
 	transition_out_ended.emit(object)
-
-

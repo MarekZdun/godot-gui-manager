@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://d3saueamxpmjh"]
+[gd_scene format=3 uid="uid://d3saueamxpmjh"]
 
-[ext_resource type="Script" path="res://work/src/main.gd" id="1"]
+[ext_resource type="Script" uid="uid://b1ii4q3sg4a02" path="res://work/src/main.gd" id="1"]
 [ext_resource type="Resource" path="res://resources/window_data/work_manager.tres" id="2"]
 
-[node name="Main" type="Node"]
+[node name="Main" type="Node" unique_id=1464249674]
 process_mode = 3
 script = ExtResource("1")
 window_manager = ExtResource("2")

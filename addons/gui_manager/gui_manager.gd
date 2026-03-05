@@ -42,13 +42,13 @@ signal manager_gui_unloaded(gui)
 @export_dir var gui_scenes_dir: String = "res://src/scenes/gui_scenes"
 @export_dir var gui_transition_scenes_dir: String = "res://src/scenes/gui_transition_scenes"
 
-var gui_container: Dictionary = {}
+var gui_container: Dictionary[String, ProxyGui] = {}
 var utils: Utils = Utils.new()
 
 
 func add_gui(gui_name: String, z_order: int = 0, transition_config: Dictionary = {}) -> String:
 	var gui_id := ""
-	var gui: Node = utils.load_scene_instance(gui_name, gui_scenes_dir)
+	var gui: ProxyGui = utils.load_scene_instance(gui_name, gui_scenes_dir) as ProxyGui
 	if gui:
 		gui_id = utils.create_id()
 		gui.gui_loaded.connect(_on_gui_loaded, CONNECT_ONE_SHOT)
@@ -70,7 +70,7 @@ func add_gui_above_top_one(gui_name: String, transition_config: Dictionary = {})
 	if gui_top:
 		gui_top_z_order = gui_top.z_order
 		
-	var gui := utils.load_scene_instance(gui_name, gui_scenes_dir)
+	var gui := utils.load_scene_instance(gui_name, gui_scenes_dir) as ProxyGui
 	if gui:
 		gui_id = utils.create_id()
 		gui.gui_loaded.connect(_on_gui_loaded, CONNECT_ONE_SHOT)
@@ -92,7 +92,7 @@ func add_gui_under_top_one(gui_name: String, transition_config: Dictionary = {})
 	if gui_top:
 		gui_top_z_order = gui_top.z_order
 		
-	var gui := utils.load_scene_instance(gui_name, gui_scenes_dir)
+	var gui := utils.load_scene_instance(gui_name, gui_scenes_dir) as ProxyGui
 	if gui:
 		gui_id = utils.create_id()
 		gui.gui_loaded.connect(_on_gui_loaded, CONNECT_ONE_SHOT)
@@ -118,7 +118,7 @@ func change_gui_top_one(gui_name: String, transition_config: Dictionary = {}, gu
 		
 		
 func destroy_gui(gui_id: String, transition_config: Dictionary = {}) -> void:
-	var gui := gui_container.get(gui_id) as CanvasLayer
+	var gui: ProxyGui = gui_container.get(gui_id)
 	if is_instance_valid(gui):
 		gui.gui_unloaded.connect(_on_gui_unloaded, CONNECT_ONE_SHOT)
 		
@@ -134,8 +134,8 @@ func destroy_all() -> void:
 			destroy_gui(gui.id)
 
 
-func find_gui_top() -> CanvasLayer:
-	var gui_top: CanvasLayer = null
+func find_gui_top() -> ProxyGui:
+	var gui_top: ProxyGui = null
 	if not gui_container.is_empty():
 		var gui_array := gui_container.values()
 		gui_top = gui_array[0]
@@ -147,20 +147,16 @@ func find_gui_top() -> CanvasLayer:
 	return gui_top 
 	
 	
-func get_gui(gui_id: String) -> CanvasLayer:
-	var gui: CanvasLayer = null
-	if gui_container.has(gui_id):
-		gui = gui_container[gui_id]
-
-	return gui
+func get_gui(gui_id: String) -> ProxyGui:
+	return gui_container.get(gui_id)
 
 
-func _on_gui_loaded(gui):
+func _on_gui_loaded(gui: ProxyGui):
 	manager_gui_loaded.emit(gui)
 	
 	
-func _on_gui_unloaded(gui):
-	var gui_id := gui.id as String
+func _on_gui_unloaded(gui: ProxyGui):
+	var gui_id := gui.id
 	gui.queue_free()
 	gui_container.erase(gui_id)
 	manager_gui_unloaded.emit(gui_id)
