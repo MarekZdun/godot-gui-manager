@@ -74,3 +74,4 @@ providing a complete GUI management system for games with multiple screens.
 	GuiManager.manager_gui_unloaded.connect(_on_gui_hidden)
 
 
+
