@@ -45,7 +45,7 @@ providing a complete GUI management system for games with multiple screens.
 	- Create custom configs by extending TransitionConfigResource
 
 4. Show a GUI with transition:
-`gdscript
+```gdscript
 	var config = TransitionConfigFadeResource.new()
 	config.transition_name = "fade"
 	config.duration = 1.0
@@ -54,7 +54,7 @@ providing a complete GUI management system for games with multiple screens.
 	config.gui_opacity_end = 1.0
 
 	var gui_id = GuiManager.add_gui("gui_main_menu", 100, config)
-`
+```
 6. Hide a GUI with transition:
 `gdscript
 	var config = TransitionConfigFadeResource.new()
@@ -77,6 +77,7 @@ providing a complete GUI management system for games with multiple screens.
 	GuiManager.manager_gui_loaded.connect(_on_gui_shown)
 	GuiManager.manager_gui_unloaded.connect(_on_gui_hidden)
 `
+
 
 
 
