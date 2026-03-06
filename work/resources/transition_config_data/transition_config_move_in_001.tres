@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="TransitionConfigMoveResource" format=3 uid="uid://65eila8rqira"]
+
+[ext_resource type="Script" uid="uid://cxdii8351fvrj" path="res://work/resources/scripts/transition_config_move_resource.gd" id="1_yq5f6"]
+
+[resource]
+script = ExtResource("1_yq5f6")
+gui_position_origin = Vector2(100, 0)
+transition_type = 1
+transition_name = "move"
+metadata/_custom_type_script = "uid://cxdii8351fvrj"

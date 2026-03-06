@@ -19,12 +19,12 @@ var z_order: int:
 	set(value):
 		z_order = value
 		layer = z_order
-var current_transition: Control
+var current_transition: ProxyGuiTransition
 
 @onready var root: Control = $Root
 
 
-func load_gui(gui_id: String, _z_order: int, transition_config: Dictionary) -> void:
+func load_gui(gui_id: String, _z_order: int, transition_config: TransitionConfigResource) -> void:
 	id = gui_id
 	z_order = _z_order
 	root.hide()
@@ -32,31 +32,29 @@ func load_gui(gui_id: String, _z_order: int, transition_config: Dictionary) -> v
 	if current_transition:
 		destroy_current_transition()
 
-	if transition_config.has("transition_name") and not transition_config.transition_name.is_empty():
-		transition_config.root = root
-		current_transition = GuiManager.utils.load_scene_instance(transition_config.transition_name, transition_config.transition_scenes_dir)
+	if  transition_config and not transition_config.transition_name.is_empty():
+		current_transition = GuiManager.create_transition(transition_config)
 		
 		if current_transition:
 			current_transition.transition_in_ended.connect(_on_transition_in_ended, CONNECT_ONE_SHOT)
 			add_child(current_transition)
-			current_transition.setup(transition_config) 
+			current_transition.setup(root, transition_config) 
 	else:
 		root.show()
 		gui_loaded.emit(self)
 		
 		
-func unload_gui(transition_config: Dictionary) -> void:
+func unload_gui(transition_config: TransitionConfigResource) -> void:
 	if current_transition:
 		destroy_current_transition()
 	
-	if transition_config.has("transition_name") and not transition_config.transition_name.is_empty():
-		transition_config.root = root
-		current_transition = GuiManager.utils.load_scene_instance(transition_config.transition_name, transition_config.transition_scenes_dir)
+	if transition_config and not transition_config.transition_name.is_empty():
+		current_transition = GuiManager.create_transition(transition_config)
 		
 		if current_transition:
 			current_transition.transition_out_ended.connect(_on_transition_out_ended, CONNECT_ONE_SHOT)
 			add_child(current_transition)
-			current_transition.setup(transition_config) 
+			current_transition.setup(root, transition_config) 
 	else:
 		root.hide()
 		gui_unloaded.emit(self)

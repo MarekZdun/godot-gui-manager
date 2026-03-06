@@ -1,20 +1,19 @@
 extends ProxyGuiTransition
 
-
 var mode: String = ProjectSettings.get_setting("display/window/stretch/mode")
 var aspect: String = ProjectSettings.get_setting("display/window/stretch/aspect")
 var gui_position_origin: Vector2
 var gui_position_end: Vector2
 var transition_type: int
-var easy_type: int
+var ease_type: int
 var tween: Tween
 
 
-func _setup(transition_config: Dictionary) -> void:
+func _setup(transition_config: TransitionConfigResource) -> void:
 	gui_position_origin = transition_config.gui_position_origin
 	gui_position_end = transition_config.gui_position_end
-	transition_type = transition_config.transition_type if transition_config.has("transition_type") else Tween.TRANS_LINEAR 
-	easy_type = transition_config.easy_type if transition_config.has("easy_type") else Tween.EASE_IN_OUT
+	transition_type = transition_config.transition_type 
+	ease_type = transition_config.ease_type
 	
 	root.global_position = remap_position_to_screen(gui_position_origin)
 	root.show()
@@ -24,13 +23,13 @@ func _setup(transition_config: Dictionary) -> void:
 	tween = create_tween()
 	var tween_callback := "_on_tween_out_ended" if transition_out else "_on_tween_in_ended"   
 	tween.finished.connect(Callable(self, tween_callback).bind(root), CONNECT_ONE_SHOT)
-	tween.tween_property(root, "global_position", remap_position_to_screen(gui_position_end), duration).set_trans(transition_type).set_ease(easy_type)
+	tween.tween_property(root, "global_position", remap_position_to_screen(gui_position_end), duration).set_trans(transition_type).set_ease(ease_type)
 
 
-func remap_position_to_screen(position: Vector2) -> Vector2:
+func remap_position_to_screen(p_position: Vector2) -> Vector2:
 	var gui_size_origin := root.get_global_rect().size
-	var x := remap(position.x, 0, 100, 0, gui_size_origin.x) 
-	var y := remap(position.y, 0, 100, 0, gui_size_origin.y)
+	var x := remap(p_position.x, 0, 100, 0, gui_size_origin.x) 
+	var y := remap(p_position.y, 0, 100, 0, gui_size_origin.y)
 	return Vector2(x, y)
 	
 	
@@ -49,7 +48,7 @@ func _on_resized():
 			tween.kill()
 			var gui_position_origin_remaped := remap_position_to_screen(gui_position_origin)
 			var gui_position_end_remaped := remap_position_to_screen(gui_position_end)
-			tween.tween_property(root, "global_position", gui_position_end_remaped, duration).from(gui_position_origin_remaped).set_trans(transition_type).set_ease(easy_type)
+			tween.tween_property(root, "global_position", gui_position_end_remaped, duration).from(gui_position_origin_remaped).set_trans(transition_type).set_ease(ease_type)
 
 
 func _on_tween_in_ended(object: Object):

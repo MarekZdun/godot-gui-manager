@@ -46,23 +46,20 @@ var gui_container: Dictionary[String, ProxyGui] = {}
 var utils: Utils = Utils.new()
 
 
-func add_gui(gui_name: String, z_order: int = 0, transition_config: Dictionary = {}) -> String:
+func add_gui(gui_name: String, z_order: int, transition_config: TransitionConfigResource) -> String:
 	var gui_id := ""
 	var gui: ProxyGui = utils.load_scene_instance(gui_name, gui_scenes_dir) as ProxyGui
 	if gui:
 		gui_id = utils.create_id()
 		gui.gui_loaded.connect(_on_gui_loaded, CONNECT_ONE_SHOT)
 		add_child(gui)
-		
-		transition_config.transition_scenes_dir = gui_transition_scenes_dir
 		gui.load_gui(gui_id, z_order, transition_config)
-		
 		gui_container[gui_id] = gui
 	
 	return gui_id
 	
 	
-func add_gui_above_top_one(gui_name: String, transition_config: Dictionary = {}) -> String:
+func add_gui_above_top_one(gui_name: String, transition_config: TransitionConfigResource) -> String:
 	var gui_id := ""
 	var gui_top_z_order := 0
 	var gui_top := find_gui_top()
@@ -75,16 +72,13 @@ func add_gui_above_top_one(gui_name: String, transition_config: Dictionary = {})
 		gui_id = utils.create_id()
 		gui.gui_loaded.connect(_on_gui_loaded, CONNECT_ONE_SHOT)
 		add_child(gui)
-		
-		transition_config.transition_scenes_dir = gui_transition_scenes_dir
 		gui.load_gui(gui_id, gui_top_z_order + 1, transition_config)
-		
 		gui_container[gui_id] = gui
 	
 	return gui_id
 	
 	
-func add_gui_under_top_one(gui_name: String, transition_config: Dictionary = {}) -> String:
+func add_gui_under_top_one(gui_name: String, transition_config: TransitionConfigResource) -> String:
 	var gui_id := ""
 	var gui_top_z_order := 0
 	var gui_top := find_gui_top()
@@ -97,16 +91,13 @@ func add_gui_under_top_one(gui_name: String, transition_config: Dictionary = {})
 		gui_id = utils.create_id()
 		gui.gui_loaded.connect(_on_gui_loaded, CONNECT_ONE_SHOT)
 		add_child(gui)
-		
-		transition_config.transition_scenes_dir = gui_transition_scenes_dir
 		gui.load_gui(gui_id, gui_top_z_order - 1, transition_config)
-		
 		gui_container[gui_id] = gui
 	
 	return gui_id
 	
 	
-func change_gui_top_one(gui_name: String, transition_config: Dictionary = {}, gui_top_transition_config: Dictionary = {}) -> String:
+func change_gui_top_one(gui_name: String, transition_config: TransitionConfigResource, gui_top_transition_config: TransitionConfigResource) -> String:
 	var gui_top_z_order := 0
 	var gui_top := find_gui_top()
 	
@@ -117,12 +108,10 @@ func change_gui_top_one(gui_name: String, transition_config: Dictionary = {}, gu
 	return add_gui(gui_name, gui_top_z_order, transition_config)
 		
 		
-func destroy_gui(gui_id: String, transition_config: Dictionary = {}) -> void:
+func destroy_gui(gui_id: String, transition_config: TransitionConfigResource) -> void:
 	var gui: ProxyGui = gui_container.get(gui_id)
 	if is_instance_valid(gui):
 		gui.gui_unloaded.connect(_on_gui_unloaded, CONNECT_ONE_SHOT)
-		
-		transition_config.transition_scenes_dir = gui_transition_scenes_dir
 		gui.unload_gui(transition_config)
 		
 		
@@ -131,7 +120,7 @@ func destroy_all() -> void:
 		var gui_array := gui_container.values()
 		
 		for gui in gui_array:
-			destroy_gui(gui.id)
+			destroy_gui(gui.id, null)
 
 
 func find_gui_top() -> ProxyGui:
@@ -149,6 +138,13 @@ func find_gui_top() -> ProxyGui:
 	
 func get_gui(gui_id: String) -> ProxyGui:
 	return gui_container.get(gui_id)
+	
+	
+func create_transition(config: TransitionConfigResource) -> ProxyGuiTransition:
+	var transition := utils.load_scene_instance(config.transition_name, gui_transition_scenes_dir) as ProxyGuiTransition
+	if not transition:
+		push_error("Failed to load transition: ", config.transition_name)
+	return transition
 
 
 func _on_gui_loaded(gui: ProxyGui):

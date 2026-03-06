@@ -24,11 +24,10 @@ var duration: float
 var transition_out: bool
 
 
-func setup(transition_config: Dictionary) -> void:
-	root = transition_config.root
+func setup(p_root: Control, transition_config: TransitionConfigResource) -> void:
+	root = p_root
 	duration = transition_config.duration
 	transition_out = transition_config.transition_out
-	
 	_setup(transition_config)
 	
 	
@@ -36,6 +35,6 @@ func pre_destroy() -> void:
 	_pre_destroy()
 
 
-@abstract func _setup(transition_config: Dictionary) -> void
+@abstract func _setup(transition_config: TransitionConfigResource) -> void
 	
 @abstract func _pre_destroy() -> void

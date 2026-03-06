@@ -6,7 +6,7 @@
 [node name="GuiCurtain" unique_id=1402945608 instance=ExtResource("1")]
 script = ExtResource("3")
 
-[node name="ColorRect" type="ColorRect" parent="Root" index="0" unique_id=1289010407]
+[node name="ColorRect" type="ColorRect" parent="Root" parent_id_path=PackedInt32Array(320395904) index="0" unique_id=1289010407]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0

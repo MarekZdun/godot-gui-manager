@@ -2,8 +2,20 @@
 
 [ext_resource type="Script" uid="uid://b1ii4q3sg4a02" path="res://work/src/main.gd" id="1"]
 [ext_resource type="Resource" path="res://resources/window_data/work_manager.tres" id="2"]
+[ext_resource type="Resource" uid="uid://c13lnblw2cyxa" path="res://work/resources/transition_config_data/transition_config_fade_in_001.tres" id="3_4pxm5"]
+[ext_resource type="Resource" uid="uid://brvwc3af4kabd" path="res://work/resources/transition_config_data/transition_config_fade_in_002.tres" id="4_5njjx"]
+[ext_resource type="Resource" uid="uid://d3jkaiaso0h5s" path="res://work/resources/transition_config_data/transition_config_fade_out_001.tres" id="5_1lewr"]
+[ext_resource type="Resource" uid="uid://cvxh3diwbfd33" path="res://work/resources/transition_config_data/transition_config_fade_out_002.tres" id="6_yolnp"]
+[ext_resource type="Resource" uid="uid://65eila8rqira" path="res://work/resources/transition_config_data/transition_config_move_in_001.tres" id="7_5njjx"]
+[ext_resource type="Resource" uid="uid://b0xsmrwfatysv" path="res://work/resources/transition_config_data/transition_config_move_out_001.tres" id="8_1lewr"]
 
 [node name="Main" type="Node" unique_id=1464249674]
 process_mode = 3
 script = ExtResource("1")
 window_manager = ExtResource("2")
+transition_config_fade_in_001 = ExtResource("3_4pxm5")
+transition_config_fade_in_002 = ExtResource("4_5njjx")
+transition_config_fade_out_001 = ExtResource("5_1lewr")
+transition_config_fade_out_002 = ExtResource("6_yolnp")
+transition_config_move_in_001 = ExtResource("7_5njjx")
+transition_config_move_out_001 = ExtResource("8_1lewr")
