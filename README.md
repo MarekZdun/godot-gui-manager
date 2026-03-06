@@ -56,7 +56,7 @@ providing a complete GUI management system for games with multiple screens.
 	var gui_id = GuiManager.add_gui("gui_main_menu", 100, config)
 ```
 6. Hide a GUI with transition:
-`gdscript
+```gdscript
 	var config = TransitionConfigFadeResource.new()
 	config.transition_name = "fade"
 	config.duration = 0.5
@@ -65,18 +65,19 @@ providing a complete GUI management system for games with multiple screens.
 	config.gui_opacity_end = 0.0
 
 	GuiManager.destroy_gui(gui_id, config)
-`
+```
 8. Layer management:
-`gdscript
+```gdscript
 	var gui_id = GuiManager.add_gui_above_top_one("gui_pause_menu", config)
 	var gui_id = GuiManager.add_gui_under_top_one("gui_pause_menu", config)
 	var new_id = GuiManager.change_gui_top_one("gui_settings", open_config, close_config)
-`
+```
 10. Connect to signals:
-`gdscript
+```gdscript
 	GuiManager.manager_gui_loaded.connect(_on_gui_shown)
 	GuiManager.manager_gui_unloaded.connect(_on_gui_hidden)
-`
+```
+
 
 
 
