@@ -1,14 +1,30 @@
 class_name ProxyGui
 extends CanvasLayer
 """
-Proxy gui
+ProxyGui - Abstract base class for GUI elements used by GuiManager
 
-Usage:
--right click on gui.tscn file in File System and choose New Inherited Scene
+DESCRIPTION:
+ProxyGui is a base class that GuiManager uses to manage various GUI screens. 
+Every GUI that needs to be shown/hidden with smooth transitions must inherit from this class. This includes:
+- Main menus
+- Settings screens
+- Pause menus
 
--right click on GUI node (top one) and choose Extend Script to add additional functionality to your GUI
+The class provides essential methods and signals that GuiManager relies on to control GUI lifecycle with transition effects.
 
--add your Control nodes to the node Root 
+USAGE:
+1. Create a new inherited GUI scene:
+	- Right-click on gui.tscn in the FileSystem dock
+	- Select "New Inherited Scene"
+	- Save the new scene (e.g., gui_main_menu.tscn)
+	
+2. Add custom logic (optional):
+	- Right-click on the root node of your new scene
+	- Select "Extend Script"
+
+3. Design your GUI:
+	- Add your UI controls (buttons, panels, labels) as children of the $Root node
+	- The $Root node is automatically available in every ProxyGui
 """
 
 signal gui_loaded(gui)

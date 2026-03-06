@@ -1,6 +1,5 @@
 extends Node
 
-
 @export var window_manager: Resource
 @export var transition_config_fade_in_001: TransitionConfigFadeResource
 @export var transition_config_fade_in_002: TransitionConfigFadeResource

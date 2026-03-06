@@ -1,18 +1,36 @@
 @abstract class_name ProxyGuiTransition
 extends Control
 """
-ProxyGuiTransition
+ProxyGuiTransition - Abstract base class for GUI transition effects
 
-Usage:
--right click on transition.tscn file in File System and choose New Inherited Scene
+DESCRIPTION:
+ProxyGuiTransition is an abstract base class for all transition effects used by the GUI system. 
+It provides a standardized interface for creating smooth appearing/disappearing animations for GUI elements. 
+Custom transitions (fade, slide, scale, etc.) are created by extending this class and implementing its abstract methods.
 
--right click on Transition node (top one) and choose Extend Script to add additional funcionality to your transition
+REQUIREMENTS:
+- Must override _setup() and _pre_destroy() abstract methods
+- Must emit transition_in_ended or transition_out_ended when animation completes
 
--add AnimatioPlayer/Tween as child of Transition node if you want to use smooth transitions
+SIGNALS:
+- transition_in_ended(gui) - emitted when "appear" transition finishes
+- transition_out_ended(gui) - emitted when "disappear" transition finishes
 
--override _setup(transition_config: Dictionary) and _pre_destroy() virtual functions
+USAGE:
+1. Create a new scene:
+	- Create a new scene with a Control node as root
+	- Save the scene (e.g., fade.tscn)
 
--don't forget about emitting signal transition_in_ended/transition_out_ended after transition is done 
+2. Add the script:
+	- Attach a script to the root Control node
+	- Make the script extend ProxyGuiTransition
+
+3. Implement transition logic:
+	- Override _setup() and _pre_destroy() methods
+
+4. Connect signals:
+	- Emit transition_in_ended when "appear" animation finishes
+	- Emit transition_out_ended when "disappear" animation finishes
 """
 
 signal transition_in_ended(gui)
