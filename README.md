@@ -4,8 +4,8 @@ A GUI Manager for [Godot Engine](https://godotengine.org/).<br />
 Looking for a Godot 3.5 version? [See godot 3.5 branch](https://github.com/MarekZdun/godot-gui-manager/tree/3.5).
 
 ## 📄 Features
-GuiManager - Manages smooth GUI transitions with ProxyGui integration
-(c) Pioneer Games
+GuiManager - Manages smooth GUI transitions with ProxyGui integration  
+(c) Pioneer Games  
 v 2.0
 
 ## 📄 Description
@@ -22,8 +22,8 @@ providing a complete GUI management system for games with multiple screens.
 - Transition configurations must use TransitionConfigResource or its derivatives
 
 ## 📄 Signals:
-- manager_gui_loaded(gui) - emitted when a GUI finishes loading and appears on screen
-- manager_gui_unloaded(gui) - emitted after GUI cleanup and removal
+- `manager_gui_loaded(gui)` - emitted when a GUI finishes loading and appears on screen
+- `manager_gui_unloaded(gui)` - emitted after GUI cleanup and removal
 
 ## 📄 Usage
 1. Setup GuiManager:
@@ -77,6 +77,7 @@ providing a complete GUI management system for games with multiple screens.
 	GuiManager.manager_gui_loaded.connect(_on_gui_shown)
 	GuiManager.manager_gui_unloaded.connect(_on_gui_hidden)
 ```
+
 
 
 
