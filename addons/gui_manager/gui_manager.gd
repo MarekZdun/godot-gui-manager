@@ -76,16 +76,6 @@ USAGE:
 7. Connect to signals:
 	GuiManager.manager_gui_loaded.connect(_on_gui_shown)
 	GuiManager.manager_gui_unloaded.connect(_on_gui_hidden)
-
-8. Create custom transitions:
-	# MyTransition.gd
-	extends ProxyGuiTransition
-
-	func _setup(config: TransitionConfigResource):
-	    # Implement your transition logic
-	    var tween = create_tween()
-	    # ... animation code
-	    tween.finished.connect(_on_transition_in_ended.bind(self))
 """
 
 signal manager_gui_loaded(gui)
