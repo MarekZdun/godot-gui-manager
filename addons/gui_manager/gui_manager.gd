@@ -215,6 +215,10 @@ class Utils extends Resource:
 			if FileAccess.file_exists(path):
 				scene = load(path).instantiate()
 				break
+				
+		if not scene:
+			push_error("GuiManager.Utils.load_scene_instance: Failed to load scene '%s' from directory '%s'" % [name, dir])
+			return null
 
 		return scene
 		
